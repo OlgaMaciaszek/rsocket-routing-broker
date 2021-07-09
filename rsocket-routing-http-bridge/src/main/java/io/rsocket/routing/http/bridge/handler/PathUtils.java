@@ -8,7 +8,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.springframework.http.server.PathContainer;
-import org.springframework.web.server.ServerWebExchange;
 
 /**
  * @author Olga Maciaszek-Sharma
@@ -21,11 +20,21 @@ class PathUtils {
 		throw new IllegalStateException("Must not instantiate utility class");
 	}
 
-	static HttpRSocketRequester.InteractionMode resolveInteractionMode(URI uri) {
+	static HttpRSocketExecutor.InteractionMode resolveInteractionMode(URI uri) {
 		PathContainer path = PathContainer.parsePath(uri.getRawPath());
-		List<PathContainer.Element> pathElements = getElements(path);
-		return HttpRSocketRequester.InteractionMode.getValue(pathElements.get(0).value());
+		return HttpRSocketExecutor.InteractionMode.getValue(getElements(path).get(0).value());
 	}
+
+	static String resolveAddress(URI uri){
+		PathContainer path = PathContainer.parsePath(uri.getRawPath());
+		return getElements(path).get(1).value();
+	}
+
+	static String resolveRoute(URI uri) {
+		PathContainer path = PathContainer.parsePath(uri.getRawPath());
+		return getElements(path).get(2).value();
+	}
+
 
 	private static List<PathContainer.Element> getElements(PathContainer path) {
 		List<PathContainer.Element> pathElements =  path.elements()

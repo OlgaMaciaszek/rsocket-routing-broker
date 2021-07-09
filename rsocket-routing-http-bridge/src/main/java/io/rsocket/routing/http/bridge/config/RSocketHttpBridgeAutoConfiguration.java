@@ -1,7 +1,7 @@
 package io.rsocket.routing.http.bridge.config;
 
 import io.rsocket.routing.client.spring.RoutingRSocketRequester;
-import io.rsocket.routing.http.bridge.handler.HttpRSocketRequester;
+import io.rsocket.routing.http.bridge.handler.HttpRSocketExecutor;
 import io.rsocket.routing.http.bridge.handler.RSocketHandlerMapping;
 import io.rsocket.routing.http.bridge.handler.RSocketWebHandler;
 import io.rsocket.routing.http.bridge.route.RSocketRouteLocator;
@@ -45,13 +45,13 @@ public class RSocketHttpBridgeAutoConfiguration {
 	}
 
 	@Bean
-	public RSocketWebHandler rSocketWebHandler(HttpRSocketRequester httpRSocketRequester) {
-		return new RSocketWebHandler(httpRSocketRequester);
+	public RSocketWebHandler rSocketWebHandler(HttpRSocketExecutor httpRSocketExecutor) {
+		return new RSocketWebHandler(httpRSocketExecutor);
 	}
 
 	@Bean
-	public HttpRSocketRequester httpRSocketRequester(RoutingRSocketRequester routingRSocketRequester) {
-		return new HttpRSocketRequester(routingRSocketRequester);
+	public HttpRSocketExecutor httpRSocketRequester(RoutingRSocketRequester routingRSocketRequester) {
+		return new HttpRSocketExecutor(routingRSocketRequester);
 	}
 
 	@Bean
